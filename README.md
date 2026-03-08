@@ -1,35 +1,3 @@
-🎉 **Отлично!** Вот готовый `docker-compose.yml` и README для твоего Docker Hub:
-
-## 📦 **docker-compose.yml**
-
-```yaml
-version: "3.8"
-
-services:
-  anilibria-proxy:
-    image: gederfix/anilibria-proxy:latest
-    container_name: anilibria-proxy
-    restart: unless-stopped
-    ports:
-      - "5003:5001"
-    environment:
-      - TZ=Europe/Moscow
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-    networks:
-      - proxy
-    security_opt:
-      - no-new-privileges:true
-
-networks:
-  proxy:
-    external: true
-```
-
----
-
-## 📝 **README.md для Docker Hub**
-
 ```markdown
 # 🎬 AniLibria Proxy for Sonarr
 
