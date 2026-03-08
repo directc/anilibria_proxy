@@ -23,10 +23,13 @@ Add Indexer → Torznab
 
 Заполните поля:
 
-Поле	Значение
-URL	http://your-server:5001/api
-API Key	anilibria123
-Categories	5000,5070 (или 0 для всех)
+Поле\Значение
+
+URL\	http://your-server:5001/api
+
+API Key\	anilibria123
+
+Categories\	5000,5070 (или 0 для всех)
 Test — если всё ок, сохраняйте
 
 📡 API Endpoints
