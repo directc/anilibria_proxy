@@ -1,77 +1,167 @@
-📺 AniLibria Proxy for Sonarr
+🎉 **Отлично!** Вот готовый `docker-compose.yml` и README для твоего Docker Hub:
 
-AniLibria Proxy — это Torznab-совместимый прокси-сервер, который позволяет интегрировать Sonarr с торрент-трекером AniLibria.TOP.
-Сервис автоматически преобразует API AniLibria в формат, понятный Sonarr, и обогащает поиск данными из Shikimori для нахождения аниме по альтернативным названиям.
+## 📦 **docker-compose.yml**
 
-✨ Возможности
-🔍 Полноценный Torznab-интерфейс — Sonarr видит AniLibria как обычный индексер
+```yaml
+version: "3.8"
 
-🎯 Поиск по названиям — русские, английские, оригинальные и альтернативные названия
+services:
+  anilibria-proxy:
+    image: gederfix/anilibria-proxy:latest
+    container_name: anilibria-proxy
+    restart: unless-stopped
+    ports:
+      - "5003:5001"
+    environment:
+      - TZ=Europe/Moscow
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - proxy
+    security_opt:
+      - no-new-privileges:true
 
-🔄 Интеграция с Shikimori — автоматическое получение всех вариантов названий аниме
+networks:
+  proxy:
+    external: true
+```
 
-📺 Поддержка сезонов и эпизодов — парсинг S1, E5, "сезон 2", "серия 13" и т.д.
+---
 
-📊 Фильтрация по качеству — 1080p, 720p, WEBRip, BDRip, HEVC, AVC
+## 📝 **README.md для Docker Hub**
 
-🧪 Тестовый режим — встроенные тестовые данные для проверки интеграции
+```markdown
+# 🎬 AniLibria Proxy for Sonarr
 
-🔧 Настройка в Sonarr
-Settings → Indexers
+[![Docker Pulls](https://img.shields.io/docker/pulls/gederfix/anilibria-proxy)](https://hub.docker.com/r/gederfix/anilibria-proxy)
+[![Docker Image Size](https://img.shields.io/docker/image-size/gederfix/anilibria-proxy/latest)](https://hub.docker.com/r/gederfix/anilibria-proxy)
 
-Add Indexer → Torznab
+**AniLibria Proxy** — это Torznab-совместимый прокси-сервер для интеграции [Sonarr](https://sonarr.tv/) с [AniLibria.TOP](https://aniliberty.top).  
+Автоматический поиск и загрузка аниме с любимыми озвучками через Shikimori.
 
-Заполните поля:
+---
 
-Поле\Значение
+## 🚀 Быстрый старт
 
-URL\	http://your-server:5001/api
+### Docker Compose (рекомендуется)
 
-API Key\	anilibria123
+Создайте `docker-compose.yml`:
 
-Categories\	5000,5070 (или 0 для всех)
-Test — если всё ок, сохраняйте
+```yaml
+version: "3.8"
 
-📡 API Endpoints
-Torznab API (/api)
-Параметр	Описание	Пример
-t	Тип запроса (caps, search, tvsearch)	t=caps
-q	Поисковый запрос	q=One+Punch+Man
-cat	Категории (5000, 5070)	cat=5000,5070
-season	Номер сезона	season=1
-ep	Номер эпизода	ep=5
-apikey	Ключ API (anilibria123)	apikey=anilibria123
-Тестовые эндпоинты
-/test — главная тестовая страница со всеми примерами
+services:
+  anilibria-proxy:
+    image: gederfix/anilibria-proxy:latest
+    container_name: anilibria-proxy
+    restart: unless-stopped
+    ports:
+      - "5003:5001"
+    environment:
+      - TZ=Europe/Moscow
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - proxy
+    security_opt:
+      - no-new-privileges:true
 
-/test-shikimori?q=Record of Ragnarok — проверка интеграции с Shikimori
+networks:
+  proxy:
+    external: true
+```
 
-Проверка Torznab
-Протестируйте разные типы запросов:
+Запуск:
+```bash
+docker-compose up -d
+```
 
-bash
-# Получение возможностей индексера
-curl "http://localhost:5001/api?t=caps&apikey=anilibria123"
+### Docker CLI
+
+```bash
+docker run -d \
+  --name anilibria-proxy \
+  --restart unless-stopped \
+  -p 5003:5001 \
+  -e TZ=Europe/Moscow \
+  -v /etc/localtime:/etc/localtime:ro \
+  --security-opt no-new-privileges:true \
+  gederfix/anilibria-proxy:latest
+```
+
+---
+
+## 🔧 Настройка в Sonarr
+
+1. **Settings → Indexers**
+2. **Add Indexer → Torznab**
+3. Заполните поля:
+
+| Поле | Значение |
+|------|----------|
+| **URL** | `http://ip-адрес-сервера:5003/api` |
+| **API Key** | `anilibria123` |
+| **Categories** | `5000,5070` |
+
+4. **Test** → **Save**
+
+---
+
+## ✨ Возможности
+
+- ✅ Полноценный Torznab-интерфейс
+- ✅ Интеграция с Shikimori (поиск по альтернативным названиям)
+- ✅ Поддержка сезонов и эпизодов
+- ✅ Тестовый режим для отладки
+- ✅ Минималистичный Docker-образ
+- ✅ Безопасный запуск (no-new-privileges)
+
+---
+
+## 📡 Проверка работы
+
+```bash
+# Тестовая страница
+curl http://localhost:5003/test
+
+# CAPS запрос
+curl "http://localhost:5003/api?t=caps&apikey=anilibria123"
 
 # Поиск аниме
-curl "http://localhost:5001/api?t=search&q=One+Punch+Man&cat=5000&apikey=anilibria123"
+curl "http://localhost:5003/api?t=search&q=One+Punch+Man&cat=5000&apikey=anilibria123"
+```
 
-# TV-поиск с сезоном и эпизодом
-curl "http://localhost:5001/api?t=tvsearch&q=ванпанчмен&cat=5000&season=1&ep=5&apikey=anilibria123"
+---
 
-# Тестовый режим (возвращает демо-данные)
-curl "http://localhost:5001/api?t=search&extended=1&cat=5000&apikey=anilibria123&limit=100&offset=0"
+## 🐳 Docker Hub
 
-⚙️ Требования
-Python 3.9 или выше
+**Образ:** [gederfix/anilibria-proxy](https://hub.docker.com/r/gederfix/anilibria-proxy)
 
-Flask 2.0+
+```bash
+docker pull gederfix/anilibria-proxy:latest
+```
 
-requests
+---
 
-Доступ к интернету (для AniLibria и Shikimori API)
+## 📦 Теги
 
-requirements.txt
-text
-flask>=2.0.0
-requests>=2.25.0
+- `latest` — последняя стабильная версия
+
+---
+
+## 🔑 API Key
+
+По умолчанию: **`anilibria123`**
+
+---
+
+## 📄 Лицензия
+
+MIT
+
+---
+
+**⭐ Если проект полезен — поставьте звезду на GitHub и Docker Hub!**
+```
+
+---
