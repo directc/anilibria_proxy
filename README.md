@@ -1,4 +1,4 @@
-```markdown
+
 # 🎬 AniLibria Proxy for Sonarr
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/gederfix/anilibria-proxy)](https://hub.docker.com/r/gederfix/anilibria-proxy)
