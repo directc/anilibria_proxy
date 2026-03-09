@@ -24,13 +24,13 @@ services:
     container_name: anilibria-proxy
     restart: unless-stopped
     ports:
-      - "5003:5001"
+      - "5003:5001" #поменять здесь можно на другой порт, 5003 твой порт, можно оставить 5001:5001
     environment:
       - TZ=Europe/Moscow
     volumes:
       - /etc/localtime:/etc/localtime:ro
     networks:
-      - proxy
+      - proxy #если ошибка, при создании образа, просто создай сеть в docker, с таким названием, или поменяй на свой
     security_opt:
       - no-new-privileges:true
 
@@ -130,4 +130,3 @@ MIT
 ---
 
 **⭐ Если проект полезен — поставьте звезду на GitHub и Docker Hub!**
-```
