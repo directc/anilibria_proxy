@@ -1,10 +1,10 @@
 
-# 🎬 AniLibria Proxy for Sonarr
+# 🎬 AniLibria Proxy for Sonarr/Prowlarr
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/gederfix/anilibria-proxy)](https://hub.docker.com/r/gederfix/anilibria-proxy)
 [![Docker Image Size](https://img.shields.io/docker/image-size/gederfix/anilibria-proxy/latest)](https://hub.docker.com/r/gederfix/anilibria-proxy)
 
-**AniLibria Proxy** — это Torznab-совместимый прокси-сервер для интеграции [Sonarr](https://sonarr.tv/) с [AniLibria.TOP](https://aniliberty.top).  
+**AniLibria Proxy** — это Torznab-совместимый прокси-сервер для интеграции собственными [Sonarr/Prowlarr](https://sonarr.tv/) с [AniLibria.TOP](https://aniliberty.top).  
 Автоматический поиск и загрузка аниме с любимыми озвучками через Shikimori.
 
 ---
@@ -59,7 +59,7 @@ docker run -d \
 
 ---
 
-## 🔧 Настройка в Sonarr
+## 🔧 Настройка в Sonarr/Prowlarr
 
 1. **Settings → Indexers**
 2. **Add Indexer → Torznab**
